@@ -16,12 +16,13 @@ function App() {
   const getMovieList = async () => {
     try {
       const data = await getDocs(moviesCollectionRef);
-      const filteredData = data.docs.map((doc)=>({...doc.data(), id:doc.id,}));
+      const filteredData = data.docs.map((doc)=>({...doc.data(), id: doc.id,}));
       setMovieList(filteredData);
     } catch (error) {
       console.error(error);
     }
-  }
+  };
+
   useEffect(() => {
     getMovieList();
   }, []);
@@ -67,6 +68,7 @@ function App() {
           <div>
             <h1> {movie.title} </h1>
             <p>Date: {movie.releaseDate} </p>
+            <p>Genre: {movie.genre} </p>
           </div>
         ))}
       </div>

@@ -31,7 +31,7 @@ export const Auth = () => {
         placeholder="Password..."
         type="password"
         onChange={(e) => setPassword(e.target.value)}/>
-      <button>Sign In</button>
+      <button onClick={signIn}>Sign In</button>
       <button onClick={logOut}>Log Out</button>
     </div>
   )
