@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import { Auth } from './components/auth';
 import { db } from './config/firebase';
-import { getDocs, collection, addDoc } from 'firebase/firestore';
+import { getDocs, collection, addDoc, deleteDoc, doc } from 'firebase/firestore';
 
 function App() {
   const [movieList, setMovieList] = useState([]);
@@ -16,11 +16,19 @@ function App() {
   const getMovieList = async () => {
     try {
       const data = await getDocs(moviesCollectionRef);
-      const filteredData = data.docs.map((doc)=>({...doc.data(), id: doc.id,}));
+      const filteredData = data.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
       setMovieList(filteredData);
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const deleteMovie = async (id) => {
+    const movieDoc = doc(db, "movies", id);
+    await deleteDoc(movieDoc);
   };
 
   useEffect(() => {
@@ -34,7 +42,6 @@ function App() {
         releaseDate: newReleaseDate,
         genre: newGenre
       });
-
       getMovieList();
     } catch (error) {
       console.error(error);
@@ -69,6 +76,7 @@ function App() {
             <h1> {movie.title} </h1>
             <p>Date: {movie.releaseDate} </p>
             <p>Genre: {movie.genre} </p>
+            <button onClick={() => deleteMovie(movie.id)}>Delete Movie</button>
           </div>
         ))}
       </div>
