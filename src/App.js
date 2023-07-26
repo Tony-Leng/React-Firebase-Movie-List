@@ -72,7 +72,7 @@ function App() {
 
       <div>
         {movieList.map((movie) => (
-          <div>
+          <div key={movie.id}>
             <h1> {movie.title} </h1>
             <p>Date: {movie.releaseDate} </p>
             <p>Genre: {movie.genre} </p>
